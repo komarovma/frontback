@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontback
+  name: frontback
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontback
+  template:
+    metadata:
+      labels:
+        app: frontback
+    spec:
+      containers:
+      - image: komarovma/devops-netology:frontend
+        imagePullPolicy: IfNotPresent
+        name: frontend
+      - image: komarovma/devops-netology:backend
+        imagePullPolicy: IfNotPresent
+        name: backend
+        env:
+          - name: HTTP_PORT
+            value: "8080"

@@ -1,0 +1,39 @@
+# Config Front
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontback
+      tier: front
+  template:
+    metadata:
+      labels:
+        app: frontback
+        tier: front
+    spec:
+      containers:
+      - name: client
+        image: komarovma/devops-netology:frontend
+        imagePullPolicy: "IfNotPresent"
+        ports:
+        - name: http
+          containerPort: 8080
+# Config Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: front
+spec:
+    type: NodePort
+    ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+    selector:
+        app: frontback
+        tier: front
