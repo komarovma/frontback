@@ -1,0 +1,9 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: my-nfs
+provisioner: 10.130.0.29/external-nfs
+parameters:
+  server: 10.233.2.59
+  path: /share
+  readOnly: "false"

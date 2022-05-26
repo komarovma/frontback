@@ -18,10 +18,20 @@ spec:
       containers:
       - image: komarovma/devops-netology:frontend
         imagePullPolicy: IfNotPresent
+        volumeMounts:
+            - mountPath: /data/front
+              name: postgredb
         name: frontend
       - image: komarovma/devops-netology:backend
         imagePullPolicy: IfNotPresent
+        volumeMounts:
+            - mountPath: /data/back
+              name: postgredb
         name: backend
         env:
           - name: HTTP_PORT
             value: "8080"
+      volumes:
+        - name: postgredb
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim

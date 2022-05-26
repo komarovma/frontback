@@ -1,0 +1,21 @@
+# Config Pod with volume from lesson
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-shared-volumes
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      volumeMounts:
+        - mountPath: "/ng"
+          name: s-vol
+    - name: busybox
+      image: busybox
+      command: ["sleep", "3600"]
+      volumeMounts:
+        - mountPath: "/bs"
+          name: s-vol
+  volumes:
+    - name: s-vol
+      emptyDir: {}
